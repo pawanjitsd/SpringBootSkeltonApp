@@ -1,4 +1,4 @@
-FROM amazoncorretto:17.0.0-alpine
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:17.0.6-al2023
 ENV USER=app
 ENV UID=12345
 ENV GID=23456

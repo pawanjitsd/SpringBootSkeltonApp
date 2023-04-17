@@ -1,0 +1,26 @@
+version: 0.0
+
+os: linux
+
+files:
+  - source: /
+    destination: /home/ec2-user/app/
+    file_exists_behavior: OVERWRITE
+
+hooks:
+  # For both, with and without LB
+  BeforeInstall:
+    - location: deploy/scripts/cleanup-current-app-directory.sh
+      runas: ec2-user
+  ApplicationStop:
+    - location: deploy/scripts/application-stop.sh
+      runas: ec2-user
+  ApplicationStart:
+    - location: deploy/scripts/application-stop.sh
+      runas: ec2-user
+    - location: deploy/scripts/application-start.sh
+      runas: ec2-user
+  # For both, with and without LB
+  ValidateService:
+    - location: deploy/scripts/validate.sh
+      runas: ec2-user

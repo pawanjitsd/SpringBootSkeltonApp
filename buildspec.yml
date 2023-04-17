@@ -1,0 +1,39 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+    commands:
+      - echo Entered the install phase...
+      - pwd
+      - cd
+      - wget https://downloads.apache.org/maven/maven-3/3.9.1/binaries//apache-maven-3.9.1-bin.tar.gz
+      - tar -zxvf apache-maven-3.5.4-bin.tar.gz
+      - mv ~/apache-maven-3.9.1 /opt
+      - chown -R root:root /opt/apache-maven-3.9.1
+      - echo 'export PATH=/opt/apache-maven-3.9.1/bin:$PATH' | tee -a /etc/profile
+      - source /etc/profile
+      - mvn -version
+      - git config --global credential.helper '!aws codecommit credential-helper $@'
+      - git config --global credential.UseHttpPath true
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn -version
+      - cd ${CODEBUILD_SRC_DIR}
+      - mvn clean package 
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - mkdir dist
+      - cd dist
+      - cd ..
+      - cp target/SpringBootSkeltonApp.jar dist
+      - cp appspec.yml dist
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no
+  name: SpringBootSkeltonApp-${CODEBUILD_RESOLVED_SOURCE_VERSION}-$(date +%Y-%m-%d)
+  base-directory: dist

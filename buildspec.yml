@@ -8,8 +8,8 @@ phases:
       - echo Entered the install phase...
       - pwd
       - cd
-      - wget https://downloads.apache.org/maven/maven-3/3.9.1/binaries//apache-maven-3.9.1-bin.tar.gz
-      - tar -zxvf apache-maven-3.5.4-bin.tar.gz
+      - wget https://downloads.apache.org/maven/maven-3/3.9.1/binaries/apache-maven-3.9.1-bin.tar.gz
+      - tar -zxvf apache-maven-3.9.1-bin.tar.gz
       - mv ~/apache-maven-3.9.1 /opt
       - chown -R root:root /opt/apache-maven-3.9.1
       - echo 'export PATH=/opt/apache-maven-3.9.1/bin:$PATH' | tee -a /etc/profile

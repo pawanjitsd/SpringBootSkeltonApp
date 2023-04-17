@@ -1,4 +1,4 @@
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:11-al2023-jdk
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-al2-full
 ENV USER=app
 ENV UID=12345
 ENV GID=23456

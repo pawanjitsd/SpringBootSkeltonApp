@@ -2,9 +2,9 @@ FROM public.ecr.aws/amazoncorretto/amazoncorretto:17-al2023-headful
 ENV USER=app
 ENV UID=12345
 ENV GID=23456
-RUN yum whatprovides \*adduser
-RUN sudo yum install adduser
-RUN sudo yum install addgroup
+RUN yum install -y shadow-utils
+RUN yum install adduser
+RUN yum install addgroup
 RUN addgroup -g 23456 app
 RUN adduser -u 12345 -G app -h /home/app -D app
 USER app

@@ -1,0 +1,9 @@
+environment: DEV
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://all-registry01.dev.cdm:8080/eureka,http://all-registry02.dev.cdm:8080/eureka
+

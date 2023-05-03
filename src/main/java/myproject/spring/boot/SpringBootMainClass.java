@@ -5,15 +5,20 @@ package myproject.spring.boot;
  */
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import myproject.spring.boot.infrastructure.AppConfigListener;
 
 
 
 
 @SpringBootApplication
+@EnableDiscoveryClient
+@ComponentScan
 public class SpringBootMainClass {
-
     public static void main(String[] args) {
-        ApplicationContext ctx = SpringApplication.run(SpringBootMainClass.class, args);
+        SpringApplication application = new SpringApplication(SpringBootMainClass.class);
+        application.addListeners(new AppConfigListener());
+        application.run(args);
     }
 }

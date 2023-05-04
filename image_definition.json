@@ -1,0 +1,6 @@
+[
+    {
+        "name": "springbootskeltonapp",
+        "imageUri": "928173699427.dkr.ecr.us-west-2.amazonaws.com/springbootskeltonapp:latest"
+    }
+]

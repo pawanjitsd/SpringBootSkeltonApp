@@ -10,7 +10,7 @@ phases:
       java: corretto17
     commands:
       - echo Entered the install phase...
-      - pwd
+      - pw
       - cd
       - wget https://downloads.apache.org/maven/maven-3/3.9.1/binaries/apache-maven-3.9.1-bin.tar.gz
       - tar -zxvf apache-maven-3.9.1-bin.tar.gz
@@ -33,11 +33,11 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - mkdir dist
+      - mkdir dist 
       - cd dist
       - cd ..
       - cp target/SpringBootSkeltonApp.jar dist
-      - cp appspec.yml dist
+      - cp image_definition.json dist
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
 artifacts:
   files:

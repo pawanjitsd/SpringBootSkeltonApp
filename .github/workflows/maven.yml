@@ -43,7 +43,6 @@ jobs:
       run: |
         echo "Building image"
         echo ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }}
-        echo pwd
         docker build -t ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} .
         
        # docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }}

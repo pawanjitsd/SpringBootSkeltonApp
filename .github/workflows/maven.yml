@@ -41,9 +41,6 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       run: |
-        echo ${{ vars.ECR_REGISTRY }}
-        echo ${{ vars.ECR_REPOSITORY }}
-        echo ${{ vars.IMAGE_TAG }} 
         docker build -t ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} .
-        docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:{{ vars.IMAGE_TAG }}
+        docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }}
 

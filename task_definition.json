@@ -1,0 +1,59 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "springbootskeltonapp",
+            "image": "928173699427.dkr.ecr.us-west-2.amazonaws.com/springbootskeltonapp:latest",
+            "cpu": 1024,
+            "memory": 2048,
+            "portMappings": [
+                {
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "aws.region",
+                    "value": "us-west-2"
+                }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "user": "1000",
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "springbootskeltonapp",
+                    "awslogs-region": "us-west-2",
+                    "awslogs-stream-prefix": "container"
+                }
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:8080/actuator/health || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 5,
+                "retries": 3,
+                "startPeriod": 40
+            }
+        }
+    ],
+    "family": "springbootskeltonapp",
+    "taskRoleArn": "arn:aws:iam::928173699427:role/springbootskeltonapp-ecr-task-role",
+    "executionRoleArn": "arn:aws:iam::928173699427:role/springbootskeltonapp-ecr-execution-role",
+    "networkMode": "awsvpc",
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "2048",
+}

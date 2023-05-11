@@ -59,7 +59,7 @@ public class AppConfigListener implements ApplicationListener<SpringApplicationE
             GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
                     .withSecretId(environment.getProperty("database.accounts-service.aws.secret-name"));
 
-            DBConfig dbConfig = new ObjectMapper()
+            DBConfig dbConfig = new ObjectMapper().configure(MapperFeature.USE_ANNOTATIONS, true)
                     .readValue(client
                                     .getSecretValue(getSecretValueRequest).getSecretString(),
                             DBConfig.class

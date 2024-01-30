@@ -1,0 +1,5 @@
+default:
+  dataProperties:
+    name: SAM7
+    timout: 25
+    config: Sweden6

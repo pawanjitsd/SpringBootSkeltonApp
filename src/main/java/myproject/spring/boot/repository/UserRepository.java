@@ -11,4 +11,9 @@ public interface UserRepository extends CrudRepository<User, UUID> {
     Optional<User> findByFederatedUserId(String federatedUserId);
 
     boolean existsByFederatedUserId(String federatedUserId);
+
+
+    boolean existsByEmail(String email);
+
+
 }

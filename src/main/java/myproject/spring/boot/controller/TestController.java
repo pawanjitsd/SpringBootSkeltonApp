@@ -1,9 +1,10 @@
 package myproject.spring.boot.controller;
 
+import myproject.spring.boot.config.ConsulConfiguration;
+import myproject.spring.boot.config.ConsulPropertiesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.PropertiesPropertySource;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -13,16 +14,28 @@ import myproject.spring.boot.domain.entity.User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Properties;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/user")
 public class TestController {
+
+    @Autowired
+    private ConsulPropertiesImpl consulProperties;
     @Autowired
     private UserRepository userRepository;
     
     @Autowired
     ConfigurableEnvironment environment;
 
+    @Autowired
+    ConsulConfiguration consulConfiguration;
+
+    /**
+     *
+     * @param federatedUserId
+     * @return
+     */
     @GetMapping("/profile/{federatedUserId}")
     public ResponseEntity<User> getProfile(@PathVariable String federatedUserId) {
         User user = userRepository.findByFederatedUserId(federatedUserId).orElse(null);
@@ -42,6 +55,33 @@ public class TestController {
     	return ResponseEntity.status(HttpStatus.OK).body(properties);
 
     }
+
+    @GetMapping("/env/config")
+    public ResponseEntity<Map> getEnvConfig() {
+        Map<String,String>  env = System.getenv();
+        return ResponseEntity.status(HttpStatus.OK).body(env);
+
+    }
+
+    @GetMapping("/app/config")
+    public ResponseEntity<ConsulPropertiesImpl> getAppConfig() {
+       return ResponseEntity.status(HttpStatus.OK).body(consulProperties);
+    }
+
+
+    @GetMapping("/consul/config")
+    public ResponseEntity<String> getConsulConfig() {
+        return ResponseEntity.status(HttpStatus.OK).body(consulConfiguration.getDisclaimer() + " -----" + consulConfiguration.getApr() + "--- " + consulConfiguration.getTimeout());
+
+    }
+/*
+    @GetMapping("/consul/feature/flags")
+    public ResponseEntity<String> getFeatureFlags() {
+        return ResponseEntity.status(HttpStatus.OK).body("Anura Enable" + /*consulConfiguration.getAnuraEnable() + " ----- OCE Enable:" + consulConfiguration.getOceEnable());
+
+    }
+*/
+
 
 
 }

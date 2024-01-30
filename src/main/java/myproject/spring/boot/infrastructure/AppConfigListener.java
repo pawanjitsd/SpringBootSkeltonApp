@@ -32,17 +32,24 @@ import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.Map;
 
-
+/**
+ * Created by XXXXXXXX IDEA.
+ */
 
 @Slf4j
 public class AppConfigListener implements ApplicationListener<SpringApplicationEvent> {
 
+
+    /**
+     *
+     * @param event
+     */
     @Override
     public void onApplicationEvent(SpringApplicationEvent event) {
         if (event instanceof ApplicationEnvironmentPreparedEvent) {
 
             ConfigurableEnvironment environment = ((ApplicationEnvironmentPreparedEvent) event).getEnvironment();
-            log.info("Environment Variable..." + environment.getProperty("aws.region"));
+            log.info("Environment Variable..." + System.getenv("aws_region"));
             if (environment.getProperty("local.environment") == null || Boolean.FALSE.equals(environment.getProperty("local.environment", Boolean.class))) {
                 initializeAppConfig(environment);
                 initializeDBConfig(environment);
@@ -51,10 +58,13 @@ public class AppConfigListener implements ApplicationListener<SpringApplicationE
 
     }
 
+
    void initializeDBConfig(ConfigurableEnvironment environment) {
         try {
+
+
             AWSSecretsManager client = AWSSecretsManagerClientBuilder.standard()
-                    .withRegion(environment.getProperty("aws.region"))
+                    .withRegion(System.getenv("aws_region"))
                     .build();
             GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
                     .withSecretId(environment.getProperty("database.accounts-service.aws.secret-name"));
@@ -71,22 +81,21 @@ public class AppConfigListener implements ApplicationListener<SpringApplicationE
         }
     }
 
+
     void initializeAppConfig(ConfigurableEnvironment environment) {
         try {
-            AmazonAppConfig client = AmazonAppConfigClient.builder().withRegion(environment.getProperty("aws.region")).build();
+           /* AmazonAppConfig client = AmazonAppConfigClient.builder().withRegion(System.getenv("aws_region")).build();
             GetConfigurationRequest getConfigurationRequest = new GetConfigurationRequest();
             getConfigurationRequest.setApplication(environment.getProperty("appconfig.application"));
             getConfigurationRequest.setConfiguration(environment.getProperty("appconfig.application"));
             getConfigurationRequest.setClientId(environment.getProperty("appconfig.application"));
-            getConfigurationRequest.setEnvironment("dev");
+            getConfigurationRequest.setEnvironment(System.getenv("environment"));
             Stream<String> stream = new String(client
                     .getConfiguration(getConfigurationRequest).getContent().array()).lines();
             Map map = stream.map(line-> line.split("=")).collect(Collectors.toMap(a->a[0],a->a[1]));
-            log.info("Pulling configuration from AWS");
-            log.info("==============" + map.get("test.config.value"));
             Properties properties = new Properties();
             properties.putAll(map);
-            environment.getPropertySources().addLast(new PropertiesPropertySource("app.config",properties));
+            environment.getPropertySources().addLast(new PropertiesPropertySource("app.config",System.getProperties()));*/
         }catch (Exception ex) {
             log.error("Unable to fetch app config.", ex);
             throw new ConfigurationRuntimeException(ex);
@@ -104,6 +113,13 @@ public class AppConfigListener implements ApplicationListener<SpringApplicationE
         properties.put("spring.datasource.url", dbConfig.getJdbcUrl());
         return new PropertiesPropertySource("spring.datasource.hikari", properties);
     }
+
+
+
+
+
+
+
 
 
 }

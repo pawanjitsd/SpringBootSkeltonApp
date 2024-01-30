@@ -173,6 +173,11 @@
             <artifactId>aws-java-sdk-appconfig</artifactId>
             <version>1.12.134</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-all</artifactId>
+            <version>4.0.0</version>
+        </dependency>
 
 
     </dependencies>

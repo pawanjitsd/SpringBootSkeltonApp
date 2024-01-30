@@ -1,24 +1,18 @@
 package myproject.spring.boot.config;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
+@Configuration
+@RefreshScope
+public class AppConfig  {
 
-@Data
-public class AppConfig {
-
-    private Map<String, String> properties = new HashMap<String,String>();
-
-    @JsonAnyGetter
-    public Map<String, String> getProperties() {
-        return properties;
+    @Bean
+    @ConfigurationProperties
+    public ConsulPropertiesImpl defaultProp() {
+        return new ConsulPropertiesImpl();
     }
 
-    @JsonAnySetter
-    public void setProperty(String key, String value){
-        properties.put(key, value);
-    }
 }

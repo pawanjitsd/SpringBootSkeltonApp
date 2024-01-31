@@ -18,6 +18,9 @@ jobs:
   dev:
     runs-on: ubuntu-latest
     environment: DEV
+    permissions: 
+      id-token: write
+      contents: read
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -28,12 +31,19 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install
+    - name: Configure AWS credentials 
+      uses: aws-actions/configure-aws-credentials@v1 
+      with: 
+        role-to-assume: arn:aws:iam::928173699427:role/GITHUB_ASSUME_ROLE
+        role-session-name: springskeltonapp-session
+        aws-region: us-west-2 
     - name: Build, tag, and push image to Amazon ECR 
       id: build-image 
       run: | 
         echo "Building container image" 
         echo ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} 
         docker build -t ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} . 
+        docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} 
    
       
       

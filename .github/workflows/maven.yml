@@ -50,10 +50,10 @@ jobs:
         -backend-config="region=us-west-2"
         terraform plan -var aws_region="us-west-2" -var aws_account_id="928173699427" -var app_name="springbootskeltonapp" \
         -var image_name="springbootskeltonapp" -var image_tag="latest" -var app_environment="dev" \
-        -var vpc_id="vpc-5b45fd23" -var subnets=[\"subnet-a7f2e7de\"] -var security_groups="[\"sg-902508de\"]"
+        -var vpc_id="vpc-5b45fd23" -var subnets="[\"subnet-a7f2e7de\"]" -var security_groups="[\"sg-902508de\"]"
         terraform apply --auto-approve -var aws_region="us-west-2" -var aws_account_id="928173699427" -var app_name="springbootskeltonapp" \
         -var image_name="springbootskeltonapp" -var image_tag="latest" -var app_environment="dev" \
-        -var vpc_id="vpc-5b45fd23" -var subnets=[\"subnet-a7f2e7de\"] -var security_groups="[\"sg-902508de\"]"
+        -var vpc_id="vpc-5b45fd23" -var subnets="[\"subnet-a7f2e7de\"]" -var security_groups="[\"sg-902508de\"]"
     - name: Build, tag, and push image to Amazon ECR 
       id: build-image 
       run: | 

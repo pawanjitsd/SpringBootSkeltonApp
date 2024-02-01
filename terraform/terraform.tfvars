@@ -1,9 +1,0 @@
-aws_region                       = "us-west-2"
-aws_account_id                   = "137703291354"
-app_name                         = "springbootskeltonapp"
-image_name                       = "springbootskeltonapp"
-image_tag                        = "latest"
-app_environment			 = "dev"
-vpc_id				 = "vpc-01344623f37992ec4"
-subnets				 = ["subnet-024c5d93d0d04697a","subnet-03c97bd1206a6a962"]
-security_groups			 = ["sg-04ab5555590667aaf","sg-04e6929b270a9f484","sg-00165adb4ee2d29c5","sg-0584dc2c364e80aa9"]

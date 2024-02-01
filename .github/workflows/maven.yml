@@ -43,10 +43,10 @@ jobs:
         aws-region: us-west-2 
     - name: Apply Terraform 
       id: apply-terraform 
+      working-directory: ./terraform
       run: | 
         echo "Applying Terraform" 
-        run: |
-          terraform init -backend-config="bucket=pawansd-terraform-state-files" -backend-config="key=springbootskeltonapp" -backend-config="region=us-west-2"
+        terraform init -backend-config="bucket=pawansd-terraform-state-files" -backend-config="key=springbootskeltonapp" -backend-config="region=us-west-2"
     - name: Build, tag, and push image to Amazon ECR 
       id: build-image 
       run: | 

@@ -41,6 +41,12 @@ jobs:
         role-to-assume: arn:aws:iam::928173699427:role/GITHUB_ASSUME_ROLE
         role-session-name: springskeltonapp-session
         aws-region: us-west-2 
+    - name: Apply Terraform 
+      id: apply-terraform 
+      run: | 
+        echo "Applying Terraform" 
+        run: |
+          terraform init -backend-config="bucket=pawansd-terraform-state-files" -backend-config="key=springbootskeltonapp" -backend-config="region=us-west-2"
     - name: Build, tag, and push image to Amazon ECR 
       id: build-image 
       run: | 
@@ -48,13 +54,5 @@ jobs:
         echo ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} 
         docker build -t ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} . 
         docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} 
-    - name: Apply Terraform 
-      id: apply-terraform 
-      run: | 
-        echo "Applying Terraform" 
-        run: |
-          terraform init -backend-config="bucket=pawansd-terraform-state-files" -backend-config="key=springbootskeltonapp" -backend-config="region=us-west-2"
-        
-      
-      
+    
 

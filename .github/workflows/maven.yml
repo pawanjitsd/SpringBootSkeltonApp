@@ -45,8 +45,8 @@ jobs:
       id: build-image 
       run: | 
         echo "Building container image" 
-        docker build -t 928173699427.dkr.ecr.us-west-2.amazonaws.com/springbootskeltonapp/latest . 
-        docker push 928173699427.dkr.ecr.us-west-2.amazonaws.com/springbootskeltonapp/latest 
+        docker build -t 928173699427.dkr.ecr.us-west-2.amazonaws.com/springbootskeltonapp:latest . 
+        docker push 928173699427.dkr.ecr.us-west-2.amazonaws.com/springbootskeltonapp:latest 
     - name: Apply Terraform 
       id: apply-terraform 
       working-directory: ./terraform

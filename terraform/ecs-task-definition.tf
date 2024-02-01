@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "ecs-task" {
       user 	= "1000",
       environmentFiles: [
 		{
-                    "value": "arn:aws:s3:::cdm-app-configs/springbootskeltonapp/environment.env",
+                    "value": "arn:aws:s3:::psingh-app-configs/springbootskeltonapp/environment.env",
                     "type": "s3"
                 }
       ],

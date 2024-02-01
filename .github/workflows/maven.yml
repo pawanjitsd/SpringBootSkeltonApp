@@ -41,6 +41,9 @@ jobs:
         role-to-assume: arn:aws:iam::928173699427:role/GITHUB_ASSUME_ROLE
         role-session-name: springskeltonapp-session
         aws-region: us-west-2 
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
     - name: Build, tag, and push image to Amazon ECR 
       id: build-image 
       run: | 

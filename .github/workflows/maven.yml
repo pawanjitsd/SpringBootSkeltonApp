@@ -29,6 +29,10 @@ jobs:
         java-version: '17'
         distribution: 'corretto'
         cache: maven
+    - name: Setup Terraform with specified version on the runner
+      uses: hashicorp/setup-terraform@v2
+      with:
+         terraform_version: 1.4.6
     - name: Build with Maven
       run: mvn clean install
     - name: Configure AWS credentials 
@@ -48,7 +52,8 @@ jobs:
       id: apply-terraform 
       run: | 
         echo "Applying Terraform" 
-        terraform init -backend-config="bucket=pawansd-terraform-state-files" -backend-config="key=springbootskeltonapp" -backend-config="region=us-west-2"
+        run: |
+          terraform init -backend-config="bucket=pawansd-terraform-state-files" -backend-config="key=springbootskeltonapp" -backend-config="region=us-west-2"
         
       
       

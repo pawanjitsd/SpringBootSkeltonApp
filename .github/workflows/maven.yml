@@ -41,6 +41,12 @@ jobs:
         role-to-assume: arn:aws:iam::928173699427:role/GITHUB_ASSUME_ROLE
         role-session-name: springskeltonapp-session
         aws-region: us-west-2 
+    - name: Build, tag, and push image to Amazon ECR 
+      id: build-image 
+      run: | 
+        echo "Building container image" 
+        docker build -t 928173699427.dkr.ecr.us-west-2.amazonaws.com/springbootskeltonapp/latest . 
+        docker push 928173699427.dkr.ecr.us-west-2.amazonaws.com/springbootskeltonapp/latest 
     - name: Apply Terraform 
       id: apply-terraform 
       working-directory: ./terraform
@@ -54,12 +60,5 @@ jobs:
         terraform apply --auto-approve -var aws_region="us-west-2" -var aws_account_id="928173699427" -var app_name="springbootskeltonapp" \
         -var image_name="springbootskeltonapp" -var image_tag="latest" -var app_environment="dev" \
         -var vpc_id="vpc-5b45fd23" -var subnets="[\"subnet-a7f2e7de\",\"subnet-414da91c\"]" -var security_groups="[\"sg-902508de\"]"
-    - name: Build, tag, and push image to Amazon ECR 
-      id: build-image 
-      run: | 
-        echo "Building container image" 
-        echo ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} 
-        docker build -t ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} . 
-        docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} 
     
 

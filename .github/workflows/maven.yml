@@ -44,7 +44,12 @@ jobs:
         echo ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} 
         docker build -t ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} . 
         docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} 
-   
+    - name: Apply Terraform 
+      id: apply-terraform 
+      run: | 
+        echo "Applying Terraform" 
+        terraform init -backend-config="bucket=pawansd-terraform-state-files" -backend-config="key=springbootskeltonapp" -backend-config="region=us-west-2"
+        
       
       
 
